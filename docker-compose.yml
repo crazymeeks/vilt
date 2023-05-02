@@ -1,0 +1,24 @@
+version: "3.2"
+
+services:
+  vilt.local:
+    image: vilt:latest
+    container_name: vilt-172.28.0.61
+    volumes:
+       - ./:/var/www/web
+       - ./nginx/conf.d:/etc/nginx/conf.d
+       - ./nginx/cert:/etc/ssl/self-signed
+    networks:
+      default:
+        ipv4_address: 172.28.0.61
+    tty: true
+    stdin_open: true
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    dns:
+      - 8.8.8.8
+networks:
+  default:
+      name: devnetwork
+      external: true
